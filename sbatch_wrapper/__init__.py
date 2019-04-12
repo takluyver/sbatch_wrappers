@@ -1,3 +1,10 @@
+"""Wrapper for sbatch used by the merced cluster to lint submitted scripts """
+
+__version__ = '0.0.1'
+
+import sys
+import subprocess
+
 argv = sys.argv[1:]
 print("argv:", argv)
 # Task for MB: Please fix sbatch argv command line
@@ -16,7 +23,7 @@ with open('test.sub') as f:
             #To-do: If user doesn't request for all the cores on the node on full.q, do not let them submit the job
         if ('full.q' in l):
                 print("You are submitting your job to full.q without requesting for full node. Please use this flag IF and ONLY IF you are using all the cores on the node")
-                         
+
 jid = result.stdout.decode().split(' ')[-1].strip()
 
 if used_exclusive:
