@@ -5,7 +5,7 @@ python:
 install:
   - pip install flit
   - pip install pytest 
-  - flit install .
+  - flit install 
 # command to run tests
 script:
   - pytest
