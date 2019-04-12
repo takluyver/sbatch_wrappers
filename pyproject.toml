@@ -9,3 +9,6 @@ author-email = "mbussonnier@ucmerced.edu"
 home-page = "https://github.com/ucmerced/sbatch_wrappers"
 classifiers = ["License :: OSI Approved :: MIT License"]
 
+[tool.flit.scripts]
+sbatch = "sbatch_wrapper:main"
+
