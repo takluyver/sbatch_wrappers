@@ -9,13 +9,14 @@ import subprocess
 def call_sbatch(args):
     return subprocess.run(['sbatch',argv[1]], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def main(call_sbatch=call_sbatch):
-    sub_script = sys.argv[1:]
-    result = call_sbatch(argv[1])
+def main(argv, *,call_sbatch=call_sbatch):
+
+    sub_script = argv[1]
+    result = call_sbatch(sub_script)
     print ("Result: ",result)
     used_wallclock = False
     used_exclusive = False
-    with open(subscripts) as f:
+    with open(sub_script) as f:
         for l in f.readlines():
             if not l.startswith('#SBATCH'):
                 continue
@@ -39,4 +40,4 @@ def main(call_sbatch=call_sbatch):
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
