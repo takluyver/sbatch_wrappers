@@ -6,14 +6,16 @@ import sys
 import subprocess
 
 
-def main():
-    argv = sys.argv[1:]
-    # Task for MB: Please fix sbatch argv command line
-    result=subprocess.run(['sbatch',argv[1]], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+def call_sbatch(args):
+    return subprocess.run(['sbatch',argv[1]], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+def main(call_sbatch=call_sbatch):
+    sub_script = sys.argv[1:]
+    result = call_sbatch(argv[1])
     print ("Result: ",result)
     used_wallclock = False
     used_exclusive = False
-    with open('test.sub') as f:
+    with open(subscripts) as f:
         for l in f.readlines():
             if not l.startswith('#SBATCH'):
                 continue
