@@ -1,0 +1,11 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "sbatch_wrapper"
+author = "University Of California Merced Research IT"
+author-email = "mbussonnier@ucmerced.edu"
+home-page = "https://github.com/ucmerced/sbatch_wrappers"
+classifiers = ["License :: OSI Approved :: MIT License"]
+
