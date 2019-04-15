@@ -11,3 +11,22 @@ def test_call():
     import tempfile
     with tempfile.NamedTemporaryFile() as f:
         main(['sbatch_wrapper', f.name], call_sbatch=fake_call_sbatch)
+
+def test_exclusive_1():
+	data = """
+#SBATCH --exclusive
+"""
+    import tempfile
+    with tempfile.NamedTemporaryFile() as f:
+        f.write(data)
+        main(['sbatch_wrapper', f.name], call_sbatch=fake_call_sbatch)
+
+	
+
+"""
+#SBATCH -n 1
+mpi_run --exclusive
+"""
+
+
+
