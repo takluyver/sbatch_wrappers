@@ -13,7 +13,7 @@ def test_call():
         main(['sbatch_wrapper', f.name], call_sbatch=fake_call_sbatch)
 
 def test_exclusive_1():
-    data = """
+    data = b"""
 #SBATCH --exclusive
 """
     import tempfile
