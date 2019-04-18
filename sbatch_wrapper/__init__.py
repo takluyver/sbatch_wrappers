@@ -27,7 +27,6 @@ def helper(argv, *, call_sbatch=call_sbatch):
     if not sub_script: 
         sys.exit(sub_script)
     with open(sub_script[0]) as f:
-        print()
         for l in f.readlines():
             if not l.startswith("#SBATCH"):
                 continue
@@ -42,9 +41,9 @@ def helper(argv, *, call_sbatch=call_sbatch):
                 )
 
     stdout = result.stdout.decode()
-    print(stdout)
+    print(stdout, end='')
     jid = stdout.split(" ")[-1].strip()
-    print(result.stderr.decode())
+    print(result.stderr.decode(), end='')
 
     return jid, used_wallclock, used_exclusive
 
