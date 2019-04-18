@@ -1,4 +1,4 @@
-from sbatch_wrapper import main
+from sbatch_wrapper import main, helper
 
     
 def fake_call_sbatch(script):
@@ -19,7 +19,12 @@ def test_exclusive_1():
     import tempfile
     with tempfile.NamedTemporaryFile() as f:
         f.write(data)
-        main(['sbatch_wrapper', f.name], call_sbatch=fake_call_sbatch)
+        f.flush()
+        jid,wall,exclusive = helper(['sbatch_wrapper', f.name], call_sbatch=fake_call_sbatch)
+    
+    assert jid == '12345'
+    assert wall == False
+    assert exclusive == True
 
 """
 #SBATCH -n 1
