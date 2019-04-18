@@ -29,7 +29,6 @@ def helper(argv, *, call_sbatch=call_sbatch):
     with open(sub_script[0]) as f:
         print()
         for l in f.readlines():
-            print("testing line", l)
             if not l.startswith("#SBATCH"):
                 continue
             if "--exclusive" in l:
@@ -42,7 +41,11 @@ def helper(argv, *, call_sbatch=call_sbatch):
                     "You are submitting your job to full.q without requesting for full node. Please use this flag IF and ONLY IF you are using all the cores on the node"
                 )
 
-    jid = result.stdout.decode().split(" ")[-1].strip()
+    stdout = result.stdout.decode()
+    print(stdout)
+    jid = stdout.split(" ")[-1].strip()
+    print(result.stderr.decode())
+
     return jid, used_wallclock, used_exclusive
 
 
