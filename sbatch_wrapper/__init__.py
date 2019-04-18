@@ -12,7 +12,7 @@ def call_sbatch(args):
     
 
     return subprocess.run(
-        [SBATCH, sub_script], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        [SBATCH, args], stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
 
 
