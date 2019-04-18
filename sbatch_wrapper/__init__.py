@@ -27,12 +27,12 @@ def helper(argv, *,call_sbatch=call_sbatch):
             print('testing line', l)
             if not l.startswith('#SBATCH'):
                 continue
-            if ('--exclusive' in l):
+            if '--exclusive' in l:
                 used_exclusive = True
-            if ('-t' in l):
+            if '-t' in l:
                 used_wallclock = True
                 #To-do: If user doesn't request for all the cores on the node on full.q, do not let them submit the job
-            if ('full.q' in l):
+            if 'full.q' in l:
                     print("You are submitting your job to full.q without requesting for full node. Please use this flag IF and ONLY IF you are using all the cores on the node")
 
     jid = result.stdout.decode().split(' ')[-1].strip()
@@ -49,6 +49,8 @@ def main(argv, *,call_sbatch=call_sbatch):
     if used_wallclock == False:
         print("You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently")
 
+def entrypoint():
+    return main(sys.argv)
 
 
 if __name__ == '__main__':
