@@ -9,7 +9,11 @@ SBATCH = '/act/slurm/bin/sbatch'
 
 
 def call_sbatch(args):
-    return subprocess.run([SBATCH, argv[1:]], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    sub_argv = []
+    if sys.argv:
+        sub_argv = sys.argv[1:]
+
+    return subprocess.run([SBATCH, sub_argv], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 def helper(argv, *,call_sbatch=call_sbatch):
 
