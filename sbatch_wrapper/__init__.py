@@ -9,7 +9,6 @@ SBATCH = "/act/slurm/bin/sbatch"
 
 
 def call_sbatch(args):
-    
 
     return subprocess.run(
         [SBATCH] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -24,7 +23,7 @@ def helper(argv, *, call_sbatch=call_sbatch):
     result = call_sbatch(sub_script)
     used_wallclock = False
     used_exclusive = False
-    if not sub_script: 
+    if not sub_script:
         sys.exit(sub_script)
     with open(sub_script[0]) as f:
         for l in f.readlines():
@@ -41,9 +40,9 @@ def helper(argv, *, call_sbatch=call_sbatch):
                 )
 
     stdout = result.stdout.decode()
-    print(stdout, end='')
+    print(stdout, end="")
     jid = stdout.split(" ")[-1].strip()
-    print(result.stderr.decode(), end='')
+    print(result.stderr.decode(), end="")
 
     return jid, used_wallclock, used_exclusive
 
