@@ -18,15 +18,15 @@ def call_sbatch(args):
 
 def helper(argv, *, call_sbatch=call_sbatch):
     sub_script = []
-    if sys.argv:
-        sub_script = sys.argv[1:]
+    if argv:
+        sub_script = argv[1:]
 
     result = call_sbatch(sub_script)
     used_wallclock = False
     used_exclusive = False
     if not sub_script: 
-        sys.exit()
-    with open(sub_script[1]) as f:
+        sys.exit(sub_script)
+    with open(sub_script[0]) as f:
         print()
         for l in f.readlines():
             print("testing line", l)
