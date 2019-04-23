@@ -72,7 +72,7 @@ def main(argv, *, call_sbatch=call_sbatch):
             with open("/var/log/sbatch.log", "a") as f:
                 import json
                 f.write(json.dumps({"job_id": jid, 
-                                    "exclusive" : true}))
+                                    "exclusive" :True}))
         except:
             pass
         print(
