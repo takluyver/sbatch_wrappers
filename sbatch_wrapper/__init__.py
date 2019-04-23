@@ -25,6 +25,7 @@ def helper(argv, *, call_sbatch=call_sbatch):
     if '--debug' in argv:
         def debug(*args, **kwargs):
             print(*args, **kwargs)
+        debug('debug log enabled')
     else:
         def debug(*args, **kwargs):
             pass
