@@ -59,8 +59,8 @@ def main(argv, *, call_sbatch=call_sbatch):
         )
     if used_wallclock == False:
         print(
-            "You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently"
-        )
+            "You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently. You can specify a wall-clock time by adding this line in your submission script '--time=days-hours:minutes:seconds'
+        ")
 
 
 def entrypoint():
