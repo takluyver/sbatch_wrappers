@@ -39,8 +39,9 @@ def helper(argv, *, call_sbatch=call_sbatch):
                 #     print(
                 #         "You are submitting your job to full.q without requesting for full node. Please use this flag IF and ONLY IF you are using all the cores on the node"
                 #     )
-    except:
-        pass
+    except Exception as e:
+        with open("/var/log/sbatch-tracebacks.log", "a") as f:
+            f.write(str(e))
     stdout = result.stdout.decode()
     print(stdout, end="")
     print(result.stderr.decode(), end="", file=sys.stderr)
