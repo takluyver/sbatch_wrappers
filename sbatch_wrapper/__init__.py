@@ -61,6 +61,7 @@ def helper(argv, *, call_sbatch=call_sbatch):
     print(result.stderr.decode(), end="", file=sys.stderr)
 
     jid = stdout.split(" ")[-1].strip()
+    debug(jid, used_wallclock, used_exclusive)
     return jid, used_wallclock, used_exclusive
 
 
@@ -80,7 +81,8 @@ def main(argv, *, call_sbatch=call_sbatch):
         )
     if used_wallclock == False:
         print(
-            "You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently. You can specify a wall-clock time by adding this line in your submission script '--time=days-hours:minutes:seconds'")
+            "You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently. You can specify a wall-clock time by adding this line in your submission script '--time=days-hours:minutes:seconds'", 
+        file=sys.stderr)
 
 
 def entrypoint():
