@@ -21,18 +21,31 @@ def helper(argv, *, call_sbatch=call_sbatch):
         sub_script = argv[1:]
 
     result = call_sbatch(sub_script)
+
+    if '--debug' in argv:
+        def debug(*args, **kwargs):
+            print(*args, **kwargs)
+    else:
+        def debug(*args, **kwargs):
+            pass
+
     try:
         used_wallclock = False
         used_exclusive = False
         if not sub_script:
+            debug('no subscript')
             sys.exit(sub_script)
         with open(sub_script[0]) as f:
             for l in f.readlines():
+                debug('testing line', l)
                 if not l.startswith("#SBATCH"):
+                    debug('skipping')
                     continue
                 if "--exclusive" in l:
+                    debug('found exclusive')
                     used_exclusive = True
                 if "-t" in l:
+                    debug('found wallclock')
                     used_wallclock = True
                     # To-do: If user doesn't request for all the cores on the node on full.q, do not let them submit the job
                 # if "full.q" in l:
