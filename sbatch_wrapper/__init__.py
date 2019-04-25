@@ -47,7 +47,7 @@ def helper(argv, *, call_sbatch=call_sbatch):
                     continue
                 if "--exclusive" in l:
                     debug("found exclusive")
-                    used_exclusive = True
+                    used_exclusive = used_exclusive
                 if "-t" in l:
                     debug("found wallclock")
                     used_wallclock = True
