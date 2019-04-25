@@ -22,11 +22,14 @@ def helper(argv, *, call_sbatch=call_sbatch):
 
     result = call_sbatch(sub_script)
 
-    if '--debug' in argv:
+    if "--debug" in argv:
+
         def debug(*args, **kwargs):
             print(*args, **kwargs)
-        debug('debug log enabled')
+
+        debug("debug log enabled")
     else:
+
         def debug(*args, **kwargs):
             pass
 
@@ -34,19 +37,19 @@ def helper(argv, *, call_sbatch=call_sbatch):
         used_wallclock = False
         used_exclusive = False
         if not sub_script:
-            debug('no subscript')
+            debug("no subscript")
             sys.exit(sub_script)
         with open(sub_script[0]) as f:
             for l in f.readlines():
-                debug('testing line', l)
+                debug("testing line", l)
                 if not l.startswith("#SBATCH"):
-                    debug('skipping')
+                    debug("skipping")
                     continue
                 if "--exclusive" in l:
-                    debug('found exclusive')
+                    debug("found exclusive")
                     used_exclusive = True
                 if "-t" in l:
-                    debug('found wallclock')
+                    debug("found wallclock")
                     used_wallclock = True
                     # To-do: If user doesn't request for all the cores on the node on full.q, do not let them submit the job
                 # if "full.q" in l:
@@ -72,10 +75,17 @@ def main(argv, *, call_sbatch=call_sbatch):
         try:
             with open("/var/log/sbatch.log", "a") as f:
                 import json
-                f.write('\n')
-                f.write(json.dumps({"job_id": jid, 
-                                    "exclusive" :True, 
-                                    "used_wallclock" : used_wallclock }))
+
+                f.write("\n")
+                f.write(
+                    json.dumps(
+                        {
+                            "job_id": jid,
+                            "exclusive": True,
+                            "used_wallclock": used_wallclock,
+                        }
+                    )
+                )
         except:
             pass
         print(
@@ -83,8 +93,9 @@ def main(argv, *, call_sbatch=call_sbatch):
         )
     if used_wallclock == False:
         print(
-            "You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently. You can specify a wall-clock time by adding this line in your submission script '--time=days-hours:minutes:seconds'", 
-        file=sys.stderr)
+            "You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently. You can specify a wall-clock time by adding this line in your submission script '--time=days-hours:minutes:seconds'",
+            file=sys.stderr,
+        )
 
 
 def entrypoint():
