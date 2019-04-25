@@ -72,22 +72,6 @@ def main(argv, *, call_sbatch=call_sbatch):
 
     jid, used_wallclock, used_exclusive = helper(argv, call_sbatch=call_sbatch)
     if used_exclusive:
-        try:
-            with open("/var/log/sbatch.log", "a") as f:
-                import json
-
-                f.write("\n")
-                f.write(
-                    json.dumps(
-                        {
-                            "job_id": jid,
-                            "exclusive": True,
-                            "used_wallclock": used_wallclock,
-                        }
-                    )
-                )
-        except:
-            pass
         print(
             "WARNING: You are using --exclusive flag in your submission file. This blocks other users from running jobs on the same node as your job. Please use this flag IF and ONLY IF you are absolutely sure you need an entire node"
         )
@@ -96,6 +80,21 @@ def main(argv, *, call_sbatch=call_sbatch):
             "You have not specified a wall-clock limit for your job to run. Please specify wall-clock time for scheduler to schedule your jobs more efficiently. You can specify a wall-clock time by adding this line in your submission script '--time=days-hours:minutes:seconds'",
             file=sys.stderr,
         )
+    try:
+        with open("/var/log/sbatch.log", "a") as f:
+            import json
+            f.write("\n")
+            f.write(
+                json.dumps(
+                    {
+                        "job_id": jid,
+                        "exclusive": True,
+                        "used_wallclock": used_wallclock,
+                    }
+                )
+            )
+    except:
+        pass
 
 
 def entrypoint():
